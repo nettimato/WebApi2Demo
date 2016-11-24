@@ -1,0 +1,49 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>NettiAuto 2016</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <div>
+        <h2>NettiAuto tarjoaa uudet ja käytetyt!</h2>
+        <input type="button" value="Hae autot" onclick="hommiin();" />
+        <div id="autot"/>
+    </div>
+    <div>
+        <h2>Auton Haku</h2>
+        <input type="text" id="autonId" size="5" />
+        <input type="button" value="Hae" onclick="haeauto();" />
+        <p id="tahan"></p>
+    </div>
+    <div>
+        <!-- scripti -->
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+        <script>
+            function hommiin()
+            {
+                var uri = 'api/cars';
+                $.getJSON(uri, function (data) {
+                    for (m in data) {
+                        document.getElementById("autot").innerHTML += data[m].Name + " " + data[m].Model + " mh: " + data[m].Price + "€ <br/>";
+                    }
+                })
+            }
+            function muotoile(item) {
+                return item.Name + " " + item.Model + " mh: " + item.Price + "€";
+            }
+            function haeauto() {
+                var uri = 'api/cars';
+                var id = $('#autonId').val();
+                $.getJSON(uri + '/' + id)
+                .done(function (data) {
+                    $('#tahan').text(muotoile(data))
+                })
+                .fail(function (jqXHR, textStatus, err) {
+                    $('#tahan').text('VIRHE: ' + err);
+                })
+            }
+        </script>
+    </div>
+</body>
+</html>

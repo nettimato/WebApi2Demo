@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>NettiAuto2</title>
+	<meta charset="utf-8" href="http://www.w3schools.com/lib.w3.css"/>
+</head>
+<body>
+    <div>
+        <h2>NettiAuto 2 uusia autoja kuvineen</h2>
+        <input type="button" value="Hae uudet autot" onclick="haeautot();"/>
+        <ul id="autot" class="w3-ul" style="width:50%"></ul>
+        <!-- scriptit -->
+        <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+        <script>
+            function haeautot()
+            {
+                var uri = 'api/cars';
+                $.getJSON(uri, function (data) {
+                    document.getElementById("autot").innerHTML += "<li><h2 class='we-container w3-teal'>Varastossa olevat autot</h2></li>"
+                    for (m in data) {
+                        document.getElementById("autot").innerHTML += "<li><h3>" + data[m].Name + "</h3> " + data[m].Model + " tarjoushinta: " + data[m].Price + "€ <img src='" + data[m].Url + "' alt='kuva' style='width:45%'/></li>";
+                    }
+                })
+            }
+        </script>
+    </div>
+</body>
+</html>
